@@ -46,7 +46,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
 fun UserInterface() {
     Column(
@@ -55,13 +54,14 @@ fun UserInterface() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
         var username by remember { mutableStateOf("") }
         var studentID by remember { mutableStateOf("")}
         var courseCode by remember { mutableStateOf("")}
         var score by remember { mutableStateOf(0)}
         var newScore = 0
 
-        TextField(
+    TextField(
             value = username ,
             onValueChange = {username = it},
             label =  {
@@ -104,17 +104,27 @@ fun UserInterface() {
                 })
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
-
+    Spacer(modifier = Modifier.height(12.dp))
+        var updateText by remember {
+            mutableStateOf("")
+        }
         Row {
-            Button(onClick = {}) {
+            Button(onClick = {
+                updateText = String.format("Results:\nUsername: %s\nStudent ID: %s\nCourse Code: %s\nScore: %s\nGrade: %s", username, studentID, courseCode, score, gradeCalculator(score))
+        }) {
                 Text(text = "Submit")
             }
         }
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        Row{
+            Button(onClick = {}) {
+                Text(text = "Contact Us")
+            }
+        }
         Row {
-            Text(
-                text = String.format("Results:\nUsername: %s\nStudent ID: %s\nCourse Code: %s\nScore: %s\nGrade: %s", username, studentID, courseCode, score, gradeCalculator(score)),
-                )
+            Text(text = updateText)
         }
     }
 
@@ -129,25 +139,25 @@ fun userInterfacePreview(){
 
 fun gradeCalculator(score: Int): String{
     var grade = ""
-    if (score < 100){
+    if (score > 80){
         grade = "A"
     }
-    else if (score < 80){
+    else if (score > 75){
         grade = "A-"
     }
-    else if (score < 75){
+    else if (score > 70){
         grade = "B+"
     }
-    else if (score < 70){
+    else if (score > 65){
         grade = "B"
     }
-    else if (score < 65){
+    else if (score > 60){
         grade = "B-"
     }
-    else if (score < 60){
+    else if (score > 55){
         grade = "C+"
     }
-    else if (score < 55){
+    else if (score > 50){
         grade = "C"
     }
     else{
